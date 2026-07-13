@@ -1,0 +1,19 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.12
+  build:
+    commands:
+      - sam build
+      - sam deploy
+        --stack-name lambda-pipeline-demo
+        --s3-bucket $ARTIFACT_BUCKET
+        --capabilities CAPABILITY_IAM
+        --no-confirm-changeset
+        --no-fail-on-empty-changeset
+
+artifacts:
+  files:
+    - '**/*'
