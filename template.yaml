@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 
-Description: Lambda Pipeline Demo
+Description: Lambda Pipeline Demo with API Gateway
 
 Resources:
   HelloFunction:
@@ -11,5 +11,24 @@ Resources:
       Runtime: python3.12
       MemorySize: 128
       Timeout: 10
-      FunctionUrlConfig:
-        AuthType: NONE
+      Events:
+        HelloRoute:
+          Type: HttpApi
+          Properties:
+            Path: /hello
+            Method: GET
+        GetItemsRoute:
+          Type: HttpApi
+          Properties:
+            Path: /items
+            Method: GET
+        PostItemsRoute:
+          Type: HttpApi
+          Properties:
+            Path: /items
+            Method: POST
+
+Outputs:
+  ApiUrl:
+    Description: API Gateway URL
+    Value: !Sub "https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com"
