@@ -5,7 +5,7 @@ Description: Lambda Pipeline Demo with API Gateway and DynamoDB
 
 Resources:
   ItemsTable:
-    Type: AWS::Dynamo::Table
+    Type: AWS::DynamoDB::Table
     Properties:
       TableName: items-table
       BillingMode: PAY_PER_REQUEST
