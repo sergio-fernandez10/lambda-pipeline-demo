@@ -1,9 +1,21 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 
-Description: Lambda Pipeline Demo with API Gateway
+Description: Lambda Pipeline Demo with API Gateway and DynamoDB
 
 Resources:
+  ItemsTable:
+    Type: AWS::Dynamo::Table
+    Properties:
+      TableName: items-table
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+
   HelloFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -11,6 +23,12 @@ Resources:
       Runtime: python3.12
       MemorySize: 128
       Timeout: 10
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref ItemsTable
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ItemsTable
       Events:
         HelloRoute:
           Type: HttpApi
@@ -21,6 +39,11 @@ Resources:
           Type: HttpApi
           Properties:
             Path: /items
+            Method: GET
+        GetItemsByIdRoute:
+          Type: HttpApi
+          Properties:
+            Path: /items/{id}
             Method: GET
         PostItemsRoute:
           Type: HttpApi
