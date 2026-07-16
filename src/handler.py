@@ -25,14 +25,16 @@ def lambda_handler(event, context):
         body = json.loads(event.get("body", "{}"))
         return create_item(body)
 
+    elif route.startswith("/items/") and method == "DELETE":
+        item_id = route.split("/")[-1]
+        return delete_item(item_id)
+
     else:
         return response(404, {"error": "Route not found"})
-
 
 def get_items():
     result = table.scan()
     return response(200, {"items": result.get("Items", [])})
-
 
 def get_item(item_id):
     result = table.get_item(Key={"id": item_id})
@@ -41,7 +43,14 @@ def get_item(item_id):
         return response(404, {"error": f"Item '{item_id}' not found"})
     return response(200, {"item": item})
 
-
+def delete_item(item_id):
+    result = table.get_item(Key={"id": item_id})
+    item = result.get("Item")
+    if not item:
+        return response(404, {"error": f"Item '{item_id}' not found"})
+    table.delete_item(Key={"id": item_id})
+    return response(200, {"message": f"Item '{item_id}' deleted successfully"})
+    
 def create_item(body):
     name = body.get("name", "Unnamed")
     item = {
@@ -51,7 +60,6 @@ def create_item(body):
     }
     table.put_item(Item=item)
     return response(201, {"message": "Item created successfully", "item": item})
-
 
 def response(status_code, body):
     return {

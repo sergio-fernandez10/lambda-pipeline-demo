@@ -50,6 +50,11 @@ Resources:
           Properties:
             Path: /items
             Method: POST
+        DeleteItemRoute:
+          Type: HttpApi
+          Properties:
+            Path: /items/{id}
+            Method: DELETE
 
 Outputs:
   ApiUrl:
