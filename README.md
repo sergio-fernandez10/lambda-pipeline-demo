@@ -95,6 +95,8 @@ The Lambda function handles all routing internally. It reads the `rawPath` and H
 
 The project is currently in **active development**.
 
+> **Note:** This is a demo deployment. The API endpoints are intentionally unauthenticated to keep the example simple; a production version would add authentication (e.g., IAM or a Cognito/JWT authorizer) and request throttling.
+
 ### ✅ Completed Features
 
 - IAM user setup with least-privilege access
