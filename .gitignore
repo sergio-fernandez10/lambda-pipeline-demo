@@ -31,3 +31,9 @@ desktop.ini
 
 # Logs
 *.log
+
+# SAM local config
+samconfig.toml
+
+# IDE settings (JetBrains)
+.idea/

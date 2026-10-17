@@ -4,7 +4,7 @@ A serverless REST API built on AWS, deployed through a fully automated CI/CD pip
 
 ## Author
 
-**Sergio**
+**Sergio Fernandez Donneys**
 - Focus Areas: Cloud infrastructure, serverless architecture, CI/CD automation, and IaC
 
 ---
@@ -188,3 +188,7 @@ This project operates entirely within the AWS free tier at normal usage:
 | CodeBuild | 100 build minutes/month |
 | CodePipeline | 1 free pipeline/month |
 | S3 | 5GB storage |
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
